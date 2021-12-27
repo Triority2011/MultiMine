@@ -3,6 +3,8 @@
 
 :delete the current mod dir or other shit
 
+set load=%cd%
+
 for /f "usebackq tokens=1,2,*" %%B IN (`reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" /v Desktop`) do set DESKTOP=%%D
 cd %DESKTOP%
 rmdir /s /q %DESKTOP%\MultiMine
@@ -11,6 +13,7 @@ goto Setup
 
 :Setup
 echo Generating necessary Files...
+
 
 :echo %DESKTOP%
 
@@ -22,8 +25,9 @@ mkdir PMMP_Installations_Here
 mkdir MultiMine_Servers
 
 
-curl -o start.cmd https://raw.githubusercontent.com/pmmp/PocketMine-MP/stable/start.cmd
-:curl -o bin.zip https://jenkins.pmmp.io/job/PHP-8.0-Aggregate/lastSuccessfulBuild/artifact/PHP-8.0-Windows-x64.zip
+xcopy "%load%\PocketMine-MP.phar" "%DESKTOP%\MultiMine\PMMP_Installations_Here\" /Y
+
+
 
 echo Please place your desired pocketmine installation inside %DESKTOP%\MultiMine\PMMP_Installations_Here, before starting this program!
 
@@ -71,10 +75,13 @@ echo Generating Files...
 set loop=0
 set loop_tar=%srvs_amnt%
 :loop
-echo hello world
-mkdir Server(%loop%)
+mkdir Server_%loop%_
 
-xcopy "%DESKTOP%\MultiMine\PMMP_Installations_Here\PocketMine-MP.phar" "%DESKTOP%\MultiMine\MultiMine_Servers\Server(%loop%)" /z /i
+copy %load%\Binary\PocketMine-MP.phar %DESKTOP%\MultiMine\MultiMine_Servers\Server_%loop%_\PocketMine-MP.phar /Y 
+robocopy %load%\Binary %DESKTOP%\MultiMine\MultiMine_Servers\Server_%loop%_\ /E
+copy "%load%\Binary\start.cmd" "%DESKTOP%\MultiMine\MultiMine_Servers\Server_%loop%_\" /Y
+
+echo %load%
 
 set /a loop=%loop%+1 
 if "%loop%"=="%loop_tar%" goto next
