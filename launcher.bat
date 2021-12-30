@@ -107,3 +107,12 @@ pause
 
 
 
+
+
+
+
+
+
+
+
+:i am in pain and agony pls send help im not joking, this took 5 days irl of nonstop work and research, pls pls pls pls pls pls pls pls pls pls pls pls pls pls pls pls pls pls
